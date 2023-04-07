@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace SuperLaFamiliaDAL.Entidades
 {
-    public class Producto
+    public class Productos
     {
 
-        public int Id_Producto { get; set; }
+        public int ID_Producto { get; set; }
 
         public string Nombre_Producto { get; set; }
 
-        public int Id_Marca { get; set; }
+        public int ID_Marca { get; set; }
 
         public int ID_Categoría { get; set; }
 

@@ -1,0 +1,85 @@
+﻿@model IEnumerable<SuperLaFamiliaDAL.Entidades.Productos>
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row text-center pt-3">
+    <div class="col-lg-6 m-auto">
+        <br />
+        <h2 class="h2">Listado de Productos disponibles en el sistema</h2>
+    </div>
+</div>
+
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ID_Producto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre_Producto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ID_Marca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ID_Categoría)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fecha_ingreso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Id_Estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Precio)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID_Producto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre_Producto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID_Marca)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID_Categoría)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fecha_ingreso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cantidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id_Estado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Precio)
+        </td>
+        <td>
+            @Html.ActionLink("Actualizar", "ActualizarProductos", new { ID_Producto = item.ID_Producto }, new { @class = "btn btn-success btn-sm" }) |
+            @Html.ActionLink("Ver", "VerProducto", new { ID_Producto = item.ID_Producto }, new { @class = "btn btn-success btn-sm" }) |
+            @Html.ActionLink("Eliminar", "EliminarProducto", new { ID_Producto = item.ID_Producto }, new { @class = "btn btn-success btn-sm" })
+        </td>
+    </tr>
+}
+
+</table>
+
+
+<p>
+    @Html.ActionLink("Crear Nuevo", "IngresarProducto", new {},  new { @class = "btn btn-secondary btn-sm" })
+</p>

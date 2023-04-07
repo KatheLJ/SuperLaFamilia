@@ -1,6 +1,9 @@
-﻿using System;
+﻿using SuperLaFamiliaDAL.Entidades;
+using SuperLaFamiliaDAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,6 +11,10 @@ namespace SuperLaFamilia.Controllers
 {
     public class HomeController : Controller
     {
+        GestiónBD objGestionBD;
+
+        // GET: Productos
+
         public ActionResult Index()
         {
             return View();
@@ -36,9 +43,9 @@ namespace SuperLaFamilia.Controllers
         //Accion que valide los datos y permite o deniega el ingreso al usuario
         public ActionResult InicioSesion()
         {
-            if (ModelState.IsValid)
+           /* if (ModelState.IsValid)
             {
-                /*using (SoportePatitosEntities ContextoBD = new SoportePatitosEntities())
+                using (SoportePatitosEntities ContextoBD = new SoportePatitosEntities())
                 {
                     var user = ContextoBD.Empleado.FirstOrDefault(a => a.Usuario.Equals(pEmpleado.Usuario) &&
                     a.Contraseña.Equals(pEmpleado.Contraseña));
@@ -65,13 +72,22 @@ namespace SuperLaFamilia.Controllers
                         // Redireccionar al usuario a la página de inicio
                         return RedirectToAction("Index", "Home");
                     }
-                }*/
+                }
             }
-
+           */
             // Si no se encuentra el usuario, redireccionar a la página de registro
             return RedirectToAction("Login", "Home");
         }
 
 
+
+
+
+
     }
+
+
+
+   
+
 }

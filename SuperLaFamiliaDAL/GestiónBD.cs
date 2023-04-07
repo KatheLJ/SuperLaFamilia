@@ -20,11 +20,11 @@ namespace SuperLaFamiliaDAL
 
         }
 
-        //SELECT
-        public async Task<List<Producto>> ObtenerProductosAsync()
+        //SELECT PRODUCTO
+        public async Task<List<Productos>> ObtenerProductosAsync()
         {
             SqlDataReader Resultado;
-            List<Producto> ListadoProductos;
+            List<Productos> ListadoProductos;
 
             using (SqlConnection objConexion = new SqlConnection(CadenaConexion))
             {
@@ -33,25 +33,29 @@ namespace SuperLaFamiliaDAL
                 SqlCommand objComando = new SqlCommand();
                 objComando.Connection = objConexion;
                 objComando.CommandType = System.Data.CommandType.Text;
-                objComando.CommandText = "SELECT * FROM PRODUCTO";
+                objComando.CommandText = "SELECT * FROM PRODUCTOS";
                 objConexion.Open();
                 Resultado = await objComando.ExecuteReaderAsync();
-                ListadoProductos = new List<Producto>();
+                ListadoProductos = new List<Productos>();
                 while (Resultado.Read())
                 {
-                    Producto objProducto = new Producto();
-                    objProducto.Id_Producto = Resultado.GetInt32(0);
+                    Productos objProducto = new Productos();
+                    objProducto.ID_Producto = Resultado.GetInt32(0);
                     objProducto.Nombre_Producto = Resultado.GetString(1);
-                    objProducto.MarcaProducto = Resultado.GetInt32(2);
-                    objProducto.CostoProducto = Resultado.GetDecimal(3);
+                    objProducto.ID_Marca = Resultado.GetInt32(2);
+                    objProducto.ID_Categoría = Resultado.GetInt32(3);
+                    objProducto.Fecha_ingreso = Resultado.GetDateTime(4);
+                    objProducto.Cantidad = Resultado.GetInt32(5);
+                    objProducto.Id_Estado = Resultado.GetInt32(6);
+                    objProducto.Precio = Resultado.GetDecimal(7);
                     ListadoProductos.Add(objProducto);
                 }
             }
             return ListadoProductos;
         }
 
-        //INSERT
-        public async Task<int> RegistrarProductoAsync(Producto oProducto)
+        //INSERT PRODUCTO
+        public async Task<int> RegistrarProductoAsync(Productos oProducto)
         {
             int Resultado = 0;
             using (SqlConnection objConexion = new SqlConnection(CadenaConexion))
@@ -68,13 +72,13 @@ namespace SuperLaFamiliaDAL
                 oParametro.ParameterName = "@NomProducto";
                 oParametro.SqlDbType = System.Data.SqlDbType.VarChar;
                 oParametro.Size = 50;
-                oParametro.Value = oProducto.NomProducto;
+                oParametro.Value = oProducto.Nombre_Producto;
 
                 objComando.Parameters.Add(oParametro);
 
-                objComando.Parameters.Add(new SqlParameter("@MarcaProducto", oProducto.MarcaProducto));
+                objComando.Parameters.Add(new SqlParameter("@ID_Marca", oProducto.ID_Marca));
 
-                objComando.Parameters.Add(new SqlParameter("@CostoProducto", oProducto.CostoProducto));
+                objComando.Parameters.Add(new SqlParameter("@Precio", oProducto.Precio));
 
                 objConexion.Open();
                 Resultado = await objComando.ExecuteNonQueryAsync();
@@ -85,8 +89,8 @@ namespace SuperLaFamiliaDAL
             return Resultado;
         }
 
-        //UPDATE
-        public async Task<int> ActualizarProductoAsync(Producto auxProducto, int id)
+        //UPDATE PRODUCTO
+        public async Task<int> ActualizarProductoAsync(Productos oProducto, int id)
         {
             int Resultado = 0;
             using (SqlConnection objConexion = new SqlConnection(CadenaConexion))
@@ -95,7 +99,7 @@ namespace SuperLaFamiliaDAL
                 SqlCommand objComando = new SqlCommand();
                 objComando.Connection = objConexion;
                 objComando.CommandType = System.Data.CommandType.Text;
-                objComando.CommandText = "Update Producto set NomProducto = @NomProducto, MarcaProducto = @MarcaProducto, CostoProducto = @CostoProducto where IdProducto = @IdProducto";
+                objComando.CommandText = "Update Producto set Nombre_Producto = @NomProducto, ID_Marca = @MarcaProducto, CostoProducto = @CostoProducto where IdProducto = @IdProducto";
 
 
                 objComando.Parameters.Add(new SqlParameter("@IdProducto", id));
@@ -104,12 +108,12 @@ namespace SuperLaFamiliaDAL
                 oParametro.ParameterName = "@NomProducto";
                 oParametro.SqlDbType = System.Data.SqlDbType.VarChar;
                 oParametro.Size = 50;
-                oParametro.Value = auxProducto.NomProducto;
+                oParametro.Value = oProducto.Nombre_Producto;
                 objComando.Parameters.Add(oParametro);
 
-                objComando.Parameters.Add(new SqlParameter("@MarcaProducto", auxProducto.MarcaProducto));
+                objComando.Parameters.Add(new SqlParameter("@ID_Marca", oProducto.ID_Marca));
 
-                objComando.Parameters.Add(new SqlParameter("@CostoProducto", auxProducto.CostoProducto));
+                objComando.Parameters.Add(new SqlParameter("@Precio", oProducto.Precio));
                 objConexion.Open();
                 Resultado = await objComando.ExecuteNonQueryAsync();
                 objConexion.Close();
@@ -121,10 +125,10 @@ namespace SuperLaFamiliaDAL
         }
 
 
-        public async Task<Producto> ObtenerProductoAsync(int? Id)
+        public async Task<Productos> ObtenerProductoAsync(int? Id)
         {
-            List<Producto> Listado = await ObtenerProductosAsync();
-            Producto auxProducto = Listado.Where(x => x.IdProducto == Id).FirstOrDefault();
+            List<Productos> Listado = await ObtenerProductosAsync();
+            Productos auxProducto = Listado.Where(x => x.ID_Producto == Id).FirstOrDefault();
             return auxProducto;
         }
 

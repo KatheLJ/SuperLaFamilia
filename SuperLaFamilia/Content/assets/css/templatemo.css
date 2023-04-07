@@ -43,6 +43,7 @@ body, ul, li, p, a, label, input, div {
   font-family: 'Roboto', sans-serif;
   font-size: 30px !important;
   font-weight: 300;
+  align-content: center;
 }
 .h3 {
   font-family: 'Roboto', sans-serif;
